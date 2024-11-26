@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Nbg-ZE-9PZ" customClass="LKRegisterView">
+            <rect key="frame" x="0.0" y="0.0" width="323" height="192"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MtZ-nf-N94">
+                    <rect key="frame" x="0.0" y="44" width="323" height="1"/>
+                    <color key="backgroundColor" red="0.96078431369999995" green="0.94901960780000005" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="JMA-qd-h6Q"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CFn-a5-GsE">
+                    <rect key="frame" x="10" y="55" width="303" height="62.5"/>
+                    <attributedString key="attributedText">
+                        <fragment content="亲爱的玩家，根据国家相关法规规定，未实名账号游戏，">
+                            <attributes>
+                                <color key="NSColor" red="0.36862745099999999" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <font key="NSFont" metaFont="system"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                        <fragment content="体验时长累计不能超过1小时">
+                            <attributes>
+                                <color key="NSColor" red="0.86193925140000005" green="0.36180824039999998" blue="0.35007381440000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <font key="NSFont" metaFont="system"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                        <fragment content="，并且">
+                            <attributes>
+                                <color key="NSColor" red="0.36862745099999999" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <font key="NSFont" metaFont="system"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                        <fragment content="不可在游戏内进行充值">
+                            <attributes>
+                                <color key="NSColor" red="0.86536318059999995" green="0.36596935990000001" blue="0.35432696339999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <font key="NSFont" metaFont="system"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                        <fragment content="。请尽快完成实名登记，拥有完整游戏体验！">
+                            <attributes>
+                                <color key="NSColor" red="0.36862745099999999" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <font key="NSFont" metaFont="system"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXY-8D-8Pk">
+                    <rect key="frame" x="10" y="132.5" width="141.5" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="Hsw-Rl-93B"/>
+                    </constraints>
+                    <state key="normal" title="暂时跳过" backgroundImage="button-one.png"/>
+                    <connections>
+                        <action selector="skipAction:" destination="Nbg-ZE-9PZ" eventType="touchUpInside" id="hvj-EI-6qL"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FRk-vB-DBX">
+                    <rect key="frame" x="0.0" y="0.0" width="323" height="44"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close.png" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-eU-C5h">
+                            <rect key="frame" x="294.5" y="15" width="13.5" height="14"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mJy-J6-0yZ">
+                            <rect key="frame" x="273" y="0.0" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="fvM-wV-Tfg"/>
+                                <constraint firstAttribute="width" constant="50" id="qfR-sj-PKg"/>
+                            </constraints>
+                            <connections>
+                                <action selector="closeAlterViewAction:" destination="Nbg-ZE-9PZ" eventType="touchUpInside" id="3z6-Ij-afb"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="温馨提示" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLI-Vq-KcO">
+                            <rect key="frame" x="126.5" y="11.5" width="70" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="mJy-J6-0yZ" firstAttribute="top" secondItem="FRk-vB-DBX" secondAttribute="top" id="1xb-Bk-ypX"/>
+                        <constraint firstItem="SLI-Vq-KcO" firstAttribute="centerY" secondItem="FRk-vB-DBX" secondAttribute="centerY" id="31d-pz-kWb"/>
+                        <constraint firstAttribute="trailing" secondItem="bX8-eU-C5h" secondAttribute="trailing" constant="15" id="JA8-au-Pg9"/>
+                        <constraint firstAttribute="height" constant="44" id="h3V-oR-dSQ"/>
+                        <constraint firstItem="SLI-Vq-KcO" firstAttribute="centerX" secondItem="FRk-vB-DBX" secondAttribute="centerX" id="k7G-5a-ORF"/>
+                        <constraint firstItem="bX8-eU-C5h" firstAttribute="centerY" secondItem="FRk-vB-DBX" secondAttribute="centerY" id="tKL-3s-Fjd"/>
+                        <constraint firstAttribute="trailing" secondItem="mJy-J6-0yZ" secondAttribute="trailing" id="vYu-s5-fpM"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQ8-WF-QlR">
+                    <rect key="frame" x="171.5" y="132.5" width="141.5" height="45"/>
+                    <state key="normal" title="实名登记" backgroundImage="button-two.png"/>
+                    <connections>
+                        <action selector="registerAction:" destination="Nbg-ZE-9PZ" eventType="touchUpInside" id="EDi-FX-6oB"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="fQ8-WF-QlR" firstAttribute="width" secondItem="mXY-8D-8Pk" secondAttribute="width" id="9AI-Z7-did"/>
+                <constraint firstItem="fQ8-WF-QlR" firstAttribute="top" secondItem="CFn-a5-GsE" secondAttribute="bottom" constant="15" id="Be1-xu-K95"/>
+                <constraint firstItem="MtZ-nf-N94" firstAttribute="leading" secondItem="Nbg-ZE-9PZ" secondAttribute="leading" id="InV-NF-KrP"/>
+                <constraint firstItem="CFn-a5-GsE" firstAttribute="top" secondItem="MtZ-nf-N94" secondAttribute="bottom" constant="10" id="Nfm-iM-Hcd"/>
+                <constraint firstItem="Wv9-NF-ZOI" firstAttribute="trailing" secondItem="fQ8-WF-QlR" secondAttribute="trailing" constant="10" id="NxR-il-7I6"/>
+                <constraint firstAttribute="trailing" secondItem="CFn-a5-GsE" secondAttribute="trailing" constant="10" id="Snn-iB-Bgd"/>
+                <constraint firstAttribute="trailing" secondItem="MtZ-nf-N94" secondAttribute="trailing" id="X88-CS-cxl"/>
+                <constraint firstAttribute="trailing" secondItem="FRk-vB-DBX" secondAttribute="trailing" id="ZDd-St-6HY"/>
+                <constraint firstItem="fQ8-WF-QlR" firstAttribute="leading" secondItem="mXY-8D-8Pk" secondAttribute="trailing" constant="20" id="Zyn-ef-snG"/>
+                <constraint firstItem="FRk-vB-DBX" firstAttribute="leading" secondItem="Wv9-NF-ZOI" secondAttribute="leading" id="aMf-Lt-hPp"/>
+                <constraint firstItem="mXY-8D-8Pk" firstAttribute="leading" secondItem="Wv9-NF-ZOI" secondAttribute="leading" constant="10" id="dOo-vW-XPr"/>
+                <constraint firstItem="fQ8-WF-QlR" firstAttribute="height" secondItem="mXY-8D-8Pk" secondAttribute="height" id="fCO-df-wJQ"/>
+                <constraint firstItem="FRk-vB-DBX" firstAttribute="top" secondItem="Nbg-ZE-9PZ" secondAttribute="top" id="gOR-MO-mfT"/>
+                <constraint firstItem="MtZ-nf-N94" firstAttribute="top" secondItem="FRk-vB-DBX" secondAttribute="bottom" id="jQG-Rv-fvD"/>
+                <constraint firstItem="CFn-a5-GsE" firstAttribute="leading" secondItem="Nbg-ZE-9PZ" secondAttribute="leading" constant="10" id="qPg-yN-ki8"/>
+                <constraint firstItem="mXY-8D-8Pk" firstAttribute="top" secondItem="CFn-a5-GsE" secondAttribute="bottom" constant="15" id="sP5-oT-YEX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="Wv9-NF-ZOI"/>
+            <point key="canvasLocation" x="18.115942028985508" y="144.64285714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="button-one.png" width="124.5" height="37.5"/>
+        <image name="button-two.png" width="124.5" height="37.5"/>
+        <image name="close.png" width="13.5" height="14"/>
+    </resources>
+</document>

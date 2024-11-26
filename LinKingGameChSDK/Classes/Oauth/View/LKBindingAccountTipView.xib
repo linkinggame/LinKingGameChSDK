@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iX7-2X-ITd" customClass="LKBindingAccountTipView">
+            <rect key="frame" x="0.0" y="0.0" width="317" height="174"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="close.png" translatesAutoresizingMaskIntoConstraints="NO" id="plJ-4b-ehA">
+                    <rect key="frame" x="283.5" y="15" width="13.5" height="14"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kSy-Fn-lia">
+                    <rect key="frame" x="0.0" y="40" width="317" height="1"/>
+                    <color key="backgroundColor" red="0.96078431372549022" green="0.94901960784313721" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="5TH-xS-pCg"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKK-Ra-rJW">
+                    <rect key="frame" x="267" y="0.0" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="3hg-7b-fae"/>
+                        <constraint firstAttribute="width" constant="50" id="mEK-jD-iHI"/>
+                    </constraints>
+                    <connections>
+                        <action selector="closeAlterViewAction:" destination="iX7-2X-ITd" eventType="touchUpInside" id="F7d-Sg-ktH"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="亲爱的玩家，您还没有绑定账号，为了防止游戏信息丢失等问题，请尽快绑定账号。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90j-6H-gZY">
+                    <rect key="frame" x="10" y="51" width="297" height="31.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.36862745098039218" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5v-Ff-OgN">
+                    <rect key="frame" x="10" y="102.5" width="138.5" height="51.5"/>
+                    <state key="normal" title="暂时跳过" backgroundImage="button-one.png"/>
+                    <connections>
+                        <action selector="quickGameAction:" destination="iX7-2X-ITd" eventType="touchUpInside" id="PuO-I8-64R"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ph3-dl-vWo">
+                    <rect key="frame" x="168.5" y="102.5" width="138.5" height="51.5"/>
+                    <state key="normal" title="账号绑定" backgroundImage="button-two.png"/>
+                    <connections>
+                        <action selector="bindingAccountAction:" destination="iX7-2X-ITd" eventType="touchUpInside" id="cNv-tp-gIF"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账号完善" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ed0-iC-8Mv">
+                    <rect key="frame" x="123.5" y="12" width="70" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="U4M-qI-C63"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="ph3-dl-vWo" firstAttribute="top" secondItem="A5v-Ff-OgN" secondAttribute="top" id="1dc-rJ-RVM"/>
+                <constraint firstItem="plJ-4b-ehA" firstAttribute="top" secondItem="iX7-2X-ITd" secondAttribute="top" constant="15" id="3Bs-Pe-G3H"/>
+                <constraint firstItem="ph3-dl-vWo" firstAttribute="leading" secondItem="A5v-Ff-OgN" secondAttribute="trailing" constant="20" id="BRu-LT-JVu"/>
+                <constraint firstAttribute="trailing" secondItem="90j-6H-gZY" secondAttribute="trailing" constant="10" id="Bhl-Tm-vWd"/>
+                <constraint firstAttribute="bottom" secondItem="ph3-dl-vWo" secondAttribute="bottom" constant="20" id="CtR-iR-EkY"/>
+                <constraint firstItem="ed0-iC-8Mv" firstAttribute="top" secondItem="iX7-2X-ITd" secondAttribute="top" constant="12" id="DGp-4f-H9o"/>
+                <constraint firstItem="kSy-Fn-lia" firstAttribute="leading" secondItem="iX7-2X-ITd" secondAttribute="leading" id="HmE-Qf-tZb"/>
+                <constraint firstItem="ph3-dl-vWo" firstAttribute="width" secondItem="A5v-Ff-OgN" secondAttribute="width" id="K6y-Xd-W01"/>
+                <constraint firstItem="kSy-Fn-lia" firstAttribute="top" secondItem="iX7-2X-ITd" secondAttribute="top" constant="40" id="LtU-Gh-cnE"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="90j-6H-gZY" secondAttribute="bottom" constant="100" id="Vh5-Oz-6GC"/>
+                <constraint firstAttribute="trailing" secondItem="kSy-Fn-lia" secondAttribute="trailing" id="WNJ-Ag-Rjh"/>
+                <constraint firstItem="A5v-Ff-OgN" firstAttribute="leading" secondItem="U4M-qI-C63" secondAttribute="leading" constant="10" id="eF8-AR-Kwb"/>
+                <constraint firstItem="ed0-iC-8Mv" firstAttribute="centerX" secondItem="iX7-2X-ITd" secondAttribute="centerX" id="eIp-JV-qa1"/>
+                <constraint firstAttribute="trailing" secondItem="hKK-Ra-rJW" secondAttribute="trailing" id="g5y-qW-hvg"/>
+                <constraint firstItem="ph3-dl-vWo" firstAttribute="height" secondItem="A5v-Ff-OgN" secondAttribute="height" id="ifW-DZ-7jQ"/>
+                <constraint firstItem="hKK-Ra-rJW" firstAttribute="top" secondItem="iX7-2X-ITd" secondAttribute="top" id="lru-Li-VzO"/>
+                <constraint firstItem="90j-6H-gZY" firstAttribute="leading" secondItem="iX7-2X-ITd" secondAttribute="leading" constant="10" id="ouD-Go-6ul"/>
+                <constraint firstAttribute="trailing" secondItem="plJ-4b-ehA" secondAttribute="trailing" constant="20" id="pOD-bw-Vmn"/>
+                <constraint firstItem="A5v-Ff-OgN" firstAttribute="top" secondItem="90j-6H-gZY" secondAttribute="bottom" constant="20" id="sMf-oV-yTx"/>
+                <constraint firstItem="U4M-qI-C63" firstAttribute="trailing" secondItem="ph3-dl-vWo" secondAttribute="trailing" constant="10" id="tvi-gK-R5X"/>
+                <constraint firstItem="90j-6H-gZY" firstAttribute="top" secondItem="kSy-Fn-lia" secondAttribute="bottom" constant="10" id="u5O-UV-Swf"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="13.768115942028986" y="139.28571428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="button-one.png" width="124.5" height="37.5"/>
+        <image name="button-two.png" width="124.5" height="37.5"/>
+        <image name="close.png" width="13.5" height="14"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

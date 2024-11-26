@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="KGk-i7-Jjw" customClass="LKOrderTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="379" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="379" height="80"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="金币:￥1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLf-wQ-Y84">
+                        <rect key="frame" x="10" y="31.5" width="359" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="订单号:123" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Jn-3j-3OC">
+                        <rect key="frame" x="10" y="9.5" width="359" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020年9月29日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jR3-Om-z0N">
+                        <rect key="frame" x="10" y="53.5" width="359" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="jR3-Om-z0N" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="29X-nh-pOV"/>
+                    <constraint firstItem="WLf-wQ-Y84" firstAttribute="top" secondItem="6Jn-3j-3OC" secondAttribute="bottom" constant="5" id="4Xy-sy-YRx"/>
+                    <constraint firstAttribute="trailing" secondItem="jR3-Om-z0N" secondAttribute="trailing" constant="10" id="7y6-RM-ecK"/>
+                    <constraint firstItem="6Jn-3j-3OC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Ah3-fM-Bdn"/>
+                    <constraint firstItem="WLf-wQ-Y84" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="DQe-hw-qiZ"/>
+                    <constraint firstAttribute="trailing" secondItem="WLf-wQ-Y84" secondAttribute="trailing" constant="10" id="G1o-Ap-bQ1"/>
+                    <constraint firstAttribute="trailing" secondItem="6Jn-3j-3OC" secondAttribute="trailing" constant="10" id="Y56-g1-uEl"/>
+                    <constraint firstItem="WLf-wQ-Y84" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hA7-T7-WLJ"/>
+                    <constraint firstItem="jR3-Om-z0N" firstAttribute="top" secondItem="WLf-wQ-Y84" secondAttribute="bottom" constant="5" id="uJC-dO-1Zg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="label_orderNumber" destination="6Jn-3j-3OC" id="jHQ-Eb-rXw"/>
+                <outlet property="label_price" destination="WLf-wQ-Y84" id="31d-iJ-Yqe"/>
+                <outlet property="label_time" destination="jR3-Om-z0N" id="rfT-aL-xqm"/>
+            </connections>
+            <point key="canvasLocation" x="174.63768115942031" y="140.625"/>
+        </tableViewCell>
+    </objects>
+</document>
