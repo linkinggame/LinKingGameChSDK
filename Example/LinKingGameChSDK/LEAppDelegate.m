@@ -28,10 +28,18 @@
     
 
     [[LKAFManager shared] registAppsFlyerDevKey:@"Rz7VqcsJLyJeofrrdNMQgg" appleAppID:@"id1559916773"];
+    //[[LKAFManager shared] registAppsFlyerDevKey:@"Rz7VqcsJLyJeofrrdNMQgg" appleAppID:@"id6752471173"];
     // 启动
     [[LKSDKManager instance] application:application didFinishLaunchingWithOptions:launchOptions];
-    /// 注册SDK
-    [[LKSDKManager instance] registLinKingSDKAppID:@"xxyzappcn_ios" withSecretkey:@"0f413dfbac" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
+    // 注册SDK 小小勇者值 appid = xxyzappcn_ios secret = 0f413dfbac
+    //
+    /*[[LKSDKManager instance] registLinKingSDKAppID:@"xxyzappcn_ios" withSecretkey:@"0f413dfbac" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
+
+        if (error != nil) {
+            NSLog(@"初始化失败：%@",error);
+        }
+   }];*/
+    [[LKSDKManager instance] registLinKingSDKAppID:@"cmzqappcn_ios" withSecretkey:@"637c031722" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
 
         if (error != nil) {
             NSLog(@"初始化失败：%@",error);

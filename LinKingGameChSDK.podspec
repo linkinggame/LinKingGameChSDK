@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LinKingGameChSDK'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'A short description of LinKingGameChSDK.'
 
 # This description is used to generate tags and improve search results.
@@ -28,13 +28,13 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/linkinggame/LinKingGameChSDK.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '11.0'
   
   s.static_framework = true
 
   s.source_files = 'LinKingGameChSDK/Classes/**/*.*'
   s.resources = "LinKingGameChSDK/Assets/*.*"
-  
+
   s.dependency 'SDWebImage', '~> 5.0.0'
   s.dependency 'IQKeyboardManager', '~> 6.5.5'
   s.dependency 'TPKeyboardAvoiding', '~> 1.3.4'
@@ -44,26 +44,50 @@ TODO: Add long description of the pod here.
   s.dependency 'MQTTClient2', '~> 0.15.6'
   s.dependency 'AFNetworking', '~> 4.0.1'
   
-  s.dependency  'TPNiOS','6.4.12'
-  s.dependency  'TPNTTSDKAdapter','6.4.12'
-  s.dependency  'TPNMintegralSDKAdapter','6.4.12'
-  s.dependency  'TPNGDTSDKAdapter','6.4.12'
-  # 穿山甲
-  s.dependency 'Ads-CN','6.4.2.7' #  pod 'Ads-CN', '~> 6.4.3.7'
-  # MintegralAdSDK
-  s.dependency 'MintegralAdSDK' ,'7.7.3' # 7.7.3
-  # 优良汇
-  s.dependency 'GDTMobSDK', '4.15.10' # 4.15.10
+#  s.dependency  'TPNiOS','6.4.12'
+#  s.dependency  'TPNTTSDKAdapter','6.4.12'
+#  s.dependency  'TPNMintegralSDKAdapter','6.4.12'
+#  s.dependency  'TPNGDTSDKAdapter','6.4.12'
+#  # 穿山甲
+#  s.dependency 'Ads-CN','6.4.2.7' #  pod 'Ads-CN', '~> 6.4.3.7'
+#  # MintegralAdSDK
+#  s.dependency 'MintegralAdSDK' ,'7.7.3' # 7.7.3
+#  # 优良汇
+#  s.dependency 'GDTMobSDK', '4.15.10' # 4.15.10
 
-  s.dependency 'MintegralAdSDK/RewardVideoAd','7.7.3'
-  s.dependency 'MintegralAdSDK/BidRewardVideoAd','7.7.3'
-  s.dependency 'MintegralAdSDK/BidInterstitialVideoAd','7.7.3'
-  s.dependency 'MintegralAdSDK/InterstitialVideoAd','7.7.3'
-  s.dependency 'MintegralAdSDK/NewInterstitialAd','7.7.3'
-  s.dependency 'MintegralAdSDK/BannerAd' ,'7.7.3'
-  s.dependency 'MintegralAdSDK/BidBannerAd','7.7.3'
-  s.dependency 'MintegralAdSDK/SplashAd','7.7.3'
-  s.dependency 'MintegralAdSDK/NativeAdvancedAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/RewardVideoAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/BidRewardVideoAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/BidInterstitialVideoAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/InterstitialVideoAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/NewInterstitialAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/BannerAd' ,'7.7.3'
+#  s.dependency 'MintegralAdSDK/BidBannerAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/SplashAd','7.7.3'
+#  s.dependency 'MintegralAdSDK/NativeAdvancedAd','7.7.3'
+
+     #Tapon引入
+     s.dependency 'AnyThinkiOS','6.4.91'
+     s.dependency 'AnyThinkTTSDKAdapter','6.4.91.2'
+    #  s.dependency 'AnyThinkMintegralSDKAdapter','6.4.91.2'
+     s.dependency 'AnyThinkGDTSDKAdapter','6.4.91.1'
+
+     # 穿山甲
+     s.dependency 'Ads-CN-Beta','7.1.0.1' #  pod 'Ads-CN', '~> 6.4.3.7'
+     # MintegralAdSDK
+     s.dependency 'MintegralAdSDK' ,'7.7.9' # 7.7.9
+     # 优良汇 腾讯广告
+     s.dependency 'GDTMobSDK', '4.15.50' # 4.15.10
+
+    #  s.dependency 'MintegralAdSDK/RewardVideoAd','7.7.9'
+    #  s.dependency 'MintegralAdSDK/BidRewardVideoAd','7.7.9'
+    #  s.dependency 'MintegralAdSDK/BidInterstitialVideoAd','7.7.9'
+    #  s.dependency 'MintegralAdSDK/InterstitialVideoAd','7.7.9'
+    #  s.dependency 'MintegralAdSDK/NewInterstitialAd','7.7.9'
+    #  s.dependency 'MintegralAdSDK/BannerAd' ,'7.7.9'
+    #  s.dependency 'MintegralAdSDK/BidBannerAd','7.7.9'
+    #  s.dependency 'MintegralAdSDK/SplashAd','7.7.9'
+    #  s.dependency 'MintegralAdSDK/NativeAdvancedAd','7.7.9'
+
   
 
 end
