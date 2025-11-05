@@ -99,7 +99,11 @@ static LKSDKManager *instance = nil;
 
     [LKSDKConfigApi fetchSDKConfigURLWithAppId:appId complete:^(NSString * _Nullable url, NSError * _Nullable error) {
         if (url.exceptNull != nil && error == nil) {
-            [self loadSDKConfigJsonWithURL:url];
+            // 添加时间参数确保每次请求都是最新的
+            NSString *separator = [url containsString:@"?"]? @"&":@"?";
+            NSString *urlWithTimestamp=[ NSString stringWithFormat:@"%@%@_t=%ld", url, separator, (long) [[NSDate date] timeIntervalSince1970] *1000];
+            [self loadSDKConfigJsonWithURL:urlWithTimestamp];
+            //[self loadSDKConfigJsonWithURL:url];
         }else{
             LKLogError(@"error:%@",error);
         }
