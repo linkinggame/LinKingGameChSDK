@@ -29,3 +29,16 @@ leon, dml630@163.com
 LinKingGameChSDK is available under the MIT license. See the LICENSE file for more info.
 
 2025-11-05 tag = 0.1.3提交
+
+2025-11-16 tag = 0.1.4提交
+
+
+
+
+
+
+
+
+
+
+

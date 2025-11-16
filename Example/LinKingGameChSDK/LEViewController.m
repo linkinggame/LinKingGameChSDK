@@ -8,6 +8,7 @@
 
 #import "LEViewController.h"
 #import <LinKingGameChSDK/LinKingGameChSDK.h>
+#import "LKAlterLoginApi.h"
 @interface LEViewController ()
 <LKAdManagerDelegate,LKOauthManagerDelegate,LKAdFaceDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *textView;
@@ -155,9 +156,18 @@
 
 - (IBAction)showBannerAction:(id)sender {
     // 初始化横屏广告
-//    [[LKSDKManager instance].adManager initAd:ADTYPE_BANNER rootViewController:self superView:self.view];
+    // [[LKSDKManager instance].adFace initAd:LK_ADTYPE_BANNER rootViewController:self superView:self.view];
+    NSLog(@"info=%@", @"这是测试注销账号");
+    [LKAlterLoginApi closeUserInfoWithId: @"" complete:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        if (error == nil) {
+            NSLog(@"info=%@", @"注销成功");
+            //走退出登录的操作
+            [[LKSDKManager instance].oauthManager logOutSDK];
+        }else{
+            NSLog(@"info=%@", @"注销失败");
+        }
+    }];
     
-    [[LKSDKManager instance].adFace initAd:LK_ADTYPE_BANNER rootViewController:self superView:self.view];
 }
 
 - (IBAction)showInterstitialAction:(id)sender {
