@@ -72,7 +72,21 @@ static char kActionHandlerTapGestureKey;
 {
     CGRect frame = self.frame;
     CGFloat stayWidth = self.image.size.width;
-    CGFloat initX = kScreenWidth - self.stayEdgeDistance - stayWidth;
+    CGFloat initX;
+
+    if ([self lk_isLandscape]) {
+        // 横屏：按刘海方向，放到安全那一侧
+        BOOL safeLeft = [self lk_safeSideIsLeftInLandscape];
+        if (safeLeft) {
+            initX = self.stayEdgeDistance;
+        } else {
+            initX = kScreenWidth - self.stayEdgeDistance - stayWidth;
+        }
+    } else {
+        // 竖屏：保持你原来的逻辑，吸在右边
+        initX = kScreenWidth - self.stayEdgeDistance - stayWidth;
+    }
+
     CGFloat initY = (kScreenHeight - NavBarBottom - TabBarHeight) * (2.0 / 3.0) + NavBarBottom;
     frame.origin.x = initX;
     frame.origin.y = initY;
@@ -83,23 +97,41 @@ static char kActionHandlerTapGestureKey;
 }
 
 
+
 - (void)moveStay
 {
     bool isLeft = [self judgeLocationIsLeft];
+
+    if ([self lk_isLandscape]) {
+        // 横屏：无视当前位置，强制使用“安全侧”（与刘海相反的那边）
+        isLeft = [self lk_safeSideIsLeftInLandscape];
+    }
+
     switch (_stayMode) {
         case STAYMODE_LEFTANDRIGHT:
         {
-             [self moveStayToMiddleInScreenBorder:isLeft];
+            [self moveStayToMiddleInScreenBorder:isLeft];
         }
             break;
         case STAYMODE_LEFT:
         {
-            [self moveToBorder:YES];
+            if ([self lk_isLandscape]) {
+                // 如果业务硬指定 LEFT，横屏时还是要保护一下：用安全侧
+                BOOL safeLeft = [self lk_safeSideIsLeftInLandscape];
+                [self moveToBorder:safeLeft];
+            } else {
+                [self moveToBorder:YES];
+            }
         }
             break;
         case STAYMODE_RIGHT:
         {
-            [self moveToBorder:NO];
+            if ([self lk_isLandscape]) {
+                BOOL safeLeft = [self lk_safeSideIsLeftInLandscape];
+                [self moveToBorder:safeLeft];
+            } else {
+                [self moveToBorder:NO];
+            }
         }
             break;
         default:
@@ -108,8 +140,14 @@ static char kActionHandlerTapGestureKey;
 }
 
 
+
 - (void)moveToBorder:(BOOL)isLeft
 {
+    if ([self lk_isLandscape]) {
+        // 横屏下始终覆盖成安全侧
+        isLeft = [self lk_safeSideIsLeftInLandscape];
+    }
+
     CGRect frame = self.frame;
     CGFloat destinationX;
     if (isLeft) {
@@ -128,6 +166,7 @@ static char kActionHandlerTapGestureKey;
     }];
     mIsHalfInScreen = NO;
 }
+
 
 
 - (CGFloat)moveSafeLocationY
@@ -170,9 +209,13 @@ static char kActionHandlerTapGestureKey;
     mIsHalfInScreen = YES;
 }
 
-// 悬浮图片居中在屏幕边缘
 - (void)moveStayToMiddleInScreenBorder:(BOOL)isLeft
 {
+    if ([self lk_isLandscape]) {
+        // 横屏：半隐藏也只能在安全侧那边
+        isLeft = [self lk_safeSideIsLeftInLandscape];
+    }
+
     CGRect frame = self.frame;
     CGFloat stayWidth = frame.size.width;
     CGFloat destinationX;
@@ -190,10 +233,8 @@ static char kActionHandlerTapGestureKey;
         pThis.frame = frame;
     }];
     mIsHalfInScreen = YES;
-    
-    
-    
 }
+
 
 - (void)setCurrentAlpha:(CGFloat)stayAlpha
 {
@@ -283,5 +324,82 @@ static char kActionHandlerTapGestureKey;
 {
     self.image = [UIImage lk_ImageNamed:imageName];
 }
+
+#pragma mark - Orientation / Notch Helpers
+
+- (UIWindow *)lk_mainWindow {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    if (!window) {
+        window = [UIApplication sharedApplication].windows.firstObject;
+    }
+    return window;
+}
+
+// 取当前界面的 UIInterfaceOrientation（注意不是 UIDeviceOrientation）
+- (UIInterfaceOrientation)lk_interfaceOrientation {
+    UIInterfaceOrientation orientation = UIInterfaceOrientationUnknown;
+    if (@available(iOS 13.0, *)) {
+        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        if (!window) {
+            window = [UIApplication sharedApplication].windows.firstObject;
+        }
+        if ([window.windowScene isKindOfClass:[UIWindowScene class]]) {
+            orientation = window.windowScene.interfaceOrientation;
+        }
+    } else {
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        orientation = [UIApplication sharedApplication].statusBarOrientation;
+    #pragma clang diagnostic pop
+    }
+    return orientation;
+}
+
+
+- (BOOL)lk_isLandscape {
+    UIInterfaceOrientation o = [self lk_interfaceOrientation];
+    return UIInterfaceOrientationIsLandscape(o);
+}
+
+// 是否是带刘海的机型（简单用 safeArea 顶部大于 20 来判断）
+- (BOOL)lk_hasNotch {
+    if (@available(iOS 11.0, *)) {
+        UIWindow *window = [self lk_mainWindow];
+        UIEdgeInsets insets = window.safeAreaInsets;
+        return insets.top > 20.0;
+    }
+    return NO;
+}
+
+/**
+ * 在横屏时，返回“安全侧”是不是左边：
+ * YES  = 左边安全
+ * NO   = 右边安全
+ *
+ * 这里直接用你实测的规律：
+ *  - 刘海在左：UIInterfaceOrientationLandscapeRight
+ *  - 刘海在右：UIInterfaceOrientationLandscapeLeft
+ */
+- (BOOL)lk_safeSideIsLeftInLandscape {
+    UIInterfaceOrientation o = [self lk_interfaceOrientation];
+
+    if (!UIInterfaceOrientationIsLandscape(o)) {
+        // 竖屏：走原来的逻辑，按当前位置判断左右
+        return [self judgeLocationIsLeft];
+    }
+
+    if (o == UIInterfaceOrientationLandscapeRight) {
+        // 刘海在左 -> 右侧安全
+        return NO;
+    } else if (o == UIInterfaceOrientationLandscapeLeft) {
+        // 刘海在右 -> 左侧安全
+        return YES;
+    }
+
+    // 理论上不会到这，兜底用当前位置
+    return [self judgeLocationIsLeft];
+}
+
+
 
 @end

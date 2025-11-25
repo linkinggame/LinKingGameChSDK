@@ -149,15 +149,53 @@ static LKOauthManager *instance = nil;
 
      floatView.translatesAutoresizingMaskIntoConstraints = NO;
     
-     NSLayoutConstraint *centY = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:rootViewController.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+//     NSLayoutConstraint *centY = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:rootViewController.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+//    
+//     NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:rootViewController.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-23];
+//       
+//     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:46];
+//     
+//     NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:46];
+//     
+//     [rootViewController.view addConstraints:@[centY,left,width,height]];
     
-     NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:rootViewController.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:-23];
-       
-     NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:46];
-     
-     NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:floatView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:46];
-     
-     [rootViewController.view addConstraints:@[centY,left,width,height]];
+      // 水平居中约束
+          NSLayoutConstraint *centerX = [NSLayoutConstraint constraintWithItem:floatView
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:rootViewController.view
+                                                                     attribute:NSLayoutAttributeCenterX
+                                                                    multiplier:1.0
+                                                                      constant:0];
+          
+          // 顶部约束（距离顶部的距离，可以根据需要调整）
+          NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:floatView
+                                                                 attribute:NSLayoutAttributeTop
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:rootViewController.view
+                                                                 attribute:NSLayoutAttributeTop
+                                                                multiplier:1.0
+                                                                  constant:20]; // 距离顶部20pt
+          
+          // 宽度约束
+          NSLayoutConstraint *width = [NSLayoutConstraint constraintWithItem:floatView
+                                                                   attribute:NSLayoutAttributeWidth
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:nil
+                                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                                  multiplier:1.0
+                                                                    constant:46];
+          
+          // 高度约束
+          NSLayoutConstraint *height = [NSLayoutConstraint constraintWithItem:floatView
+                                                                    attribute:NSLayoutAttributeHeight
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:nil
+                                                                    attribute:NSLayoutAttributeNotAnAttribute
+                                                                   multiplier:1.0
+                                                                     constant:46];
+          
+          [rootViewController.view addConstraints:@[centerX, top, width, height]];
 }
 
 - (void)loginApiWithRootViewController:(UIViewController *_Nullable)viewController complete:(void(^)(LKUser * _Nullable user,NSError * _Nullable error))complete{
