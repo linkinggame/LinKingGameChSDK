@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LinKingGameChSDK'
-  s.version          = '0.1.4'
+  s.version          = '0.1.5'
   s.summary          = 'A short description of LinKingGameChSDK.'
 
 # This description is used to generate tags and improve search results.
@@ -77,6 +77,9 @@ TODO: Add long description of the pod here.
      s.dependency 'MintegralAdSDK' ,'7.7.9' # 7.7.9
      # 优良汇 腾讯广告
      s.dependency 'GDTMobSDK', '4.15.50' # 4.15.10
+
+     # 引力引擎
+     s.dependency 'GravityEngineSDK','5.0.11'
 
     #  s.dependency 'MintegralAdSDK/RewardVideoAd','7.7.9'
     #  s.dependency 'MintegralAdSDK/BidRewardVideoAd','7.7.9'

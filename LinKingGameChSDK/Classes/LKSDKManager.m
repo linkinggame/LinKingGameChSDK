@@ -24,9 +24,12 @@
 #import <TZImagePickerController/TZImagePickerController.h>
 #import "LKPointManager.h"
 #import "LKPointApi.h"
+#import "LKTaptapUpload.h"
 #import "LKApplePayManager.h"
 #import "LKLog.h"
 #import "LKAdFace.h"
+#import <GravityEngineSDK/GravityEngineSDK.h>
+
 @interface LKSDKManager ()<UIApplicationDelegate>
 /// 授权管理类
 @property (nonatomic, strong) LKOauthManager *oauthManager;
@@ -44,9 +47,13 @@
 
 @property (nonatomic, copy) void(^registerSDKComplete)(LKSDKManager *manager,NSError *error);
 
+
+
 @end
 
 static LKSDKManager *instance = nil;
+static GravityEngineSDK *gravityEngine = nil;
+
 @implementation LKSDKManager
 
 
@@ -103,7 +110,7 @@ static LKSDKManager *instance = nil;
             NSString *separator = [url containsString:@"?"]? @"&":@"?";
             NSString *urlWithTimestamp=[ NSString stringWithFormat:@"%@%@_t=%ld", url, separator, (long) [[NSDate date] timeIntervalSince1970] *1000];
             [self loadSDKConfigJsonWithURL:urlWithTimestamp];
-            //[self loadSDKConfigJsonWithURL:url];
+//            [self loadSDKConfigJsonWithURL:url];
         }else{
             LKLogError(@"error:%@",error);
         }
@@ -122,6 +129,7 @@ static LKSDKManager *instance = nil;
             // 注册广告
 //            [[LKAdManager shared] registerAggregateAd];
             [[LKAdFace shared] registerAggregateAd];
+            
 
         }else{
             LKLogInfo(@"==SDK初始化失败==");
@@ -196,6 +204,39 @@ static LKSDKManager *instance = nil;
     self.pointManager = [LKPointManager shared];
     [LKPointApi pointEventName:@"Activation" withTp:@"Activation" withValues:nil complete:^(NSError * _Nonnull error) {
     }];
+    
+    [self initGravityEngineAndTap];
+    // 军娜taptap的php服务端上报
+    [LKTaptapUpload uploadTaptapType:@"1" withAmount:@"0" withPayType:@"" complete:nil];
+}
+
+- (void)initGravityEngineAndTap {
+    NSDictionary *gravityengine_config=[LKSDKConfig getGravityEngineFromConfig];
+    if (gravityengine_config!=nil) {
+        NSString * use_flag=gravityengine_config[@"use_flag"];
+        NSString * appId3=gravityengine_config[@"app_id"];
+        NSString * token3=gravityengine_config[@"access_token"];
+        LKLogInfo(@"gravityengine_config info use_flag=%@,app_id=%@, access_token=%@", use_flag, appId3, token3);
+        if ([@"1" isEqualToString:use_flag]) {
+            //初始化引力引擎
+            GEConfig *config = [GEConfig new];
+            config.appid = appId3;
+            config.accessToken = token3;
+            [GravityEngineSDK startWithConfig:config];
+            gravityEngine = [GravityEngineSDK sharedInstanceWithAppid:config.appid];
+            // 开启自动采集
+            [gravityEngine enableAutoTrack:GravityEngineEventTypeAll];
+            [gravityEngine initializeGravityEngineWithAsaEnable:NO withClientId:nil withCaid1:nil withCaid2:nil withSyncAttribution:NO withChannel:@"AppStore" withSuccessCallback:^(NSDictionary * _Nonnull response) {
+                LKLogInfo(@"gravity engine initialize success, response is %@", response);
+                //注册上报
+                [gravityEngine trackRegisterEvent];
+            } withErrorCallback:^(NSError * _Nonnull error) {
+                LKLogInfo(@"gravity engine initialize failed, and error is %@", error);
+            }];
+            
+        }
+    }
+    
     
 }
 
@@ -274,6 +315,14 @@ static LKSDKManager *instance = nil;
 - (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity  API_AVAILABLE(ios(13.0)) API_AVAILABLE(ios(13.0)){
 
 }
+
+- (void)geTrackPayEventWithAmount:(int)payAmount withPayType:(NSString *)payType withOrderId:(NSString *)orderId withPayReason:(NSString *)payReason withPayMethod:(NSString *)payMethod{
+    if (gravityEngine!=nil) {
+        [gravityEngine trackPayEventWithAmount:payAmount withPayType:payType withOrderId:orderId withPayReason:payReason withPayMethod:payMethod];
+        NSLog(@"gravity TrackPayEventWithAmount=%d,payType=%@,orderId=%@, payReason=%@, payMethod=%@", payAmount, payType, orderId, payReason, payMethod);
+    }
+}
+
 
 
 @end

@@ -376,17 +376,17 @@
         LKGoods *goods = products[num];
             NSDictionary *params = @{
                 @"cp_order_no":[NSString stringWithFormat:@"%@%d",@"432432494238934829042", rand() % 1000],
-                @"server_id":@"1",
+                @"server_id":@"2",
                 @"notify_url":@"xxx",
                 @"extra":@"1",
                 @"role_id":@"31231",
-                @"product_id":@"xyz.littlehero.common.30.v1",
-                @"product_desc":@"300个龙晶",
-                @"amount":@"30",
+                @"product_id":@"com.lingyue.jinbi1",
+                @"product_desc":@"10金币",
+                @"amount":@"1",
                 @"type":@"ios"
             };
             
-        [self.manager.payManager showPayViewRootViewController:self productId:@"xyz.littlehero.common.30.v1" parameters:params complete:^(INAPPPurchType type, NSError * _Nullable error) {
+        [self.manager.payManager showPayViewRootViewController:self productId:@"com.lingyue.jinbi1" parameters:params complete:^(INAPPPurchType type, NSError * _Nullable error) {
             NSString *info = nil;
             if (type == INAPPPurchSuccess) { // 购买成功
                 NSLog(@"支付成功");

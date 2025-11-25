@@ -37,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)instance;
 
-
 /// 注册数据分析
 - (void)registAnalysis;
 /// 注册SDK
@@ -63,6 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)scene:(UIScene *)scene continueUserActivity:(NSUserActivity *)userActivity  API_AVAILABLE(ios(13.0)) API_AVAILABLE(ios(13.0));
 
 - (void)scene:(UIScene *)scene openURLContexts:(NSSet<UIOpenURLContext *> *)URLContexts API_AVAILABLE(ios(13.0));
+
+- (void)geTrackPayEventWithAmount:(int)payAmount withPayType:(NSString *)payType withOrderId:(NSString *)orderId withPayReason:(NSString *)payReason withPayMethod:(NSString *)payMethod;
 
 
 @end

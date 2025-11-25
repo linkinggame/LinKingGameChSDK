@@ -35,6 +35,8 @@
         self.thirdOpenPay = dictionary[@"third_open_pay"];
         self.rechargePay = dictionary[@"recharge_pay"];
         self.webPayBaseUrl = dictionary[@"web_pay_base_url"];
+        self.taptap_config = dictionary[@"taptap_config"];
+        self.gravityengine_config = dictionary[@"gravityengine_config"];
     }
     return self;
 }
@@ -62,6 +64,8 @@
         self.thirdOpenPay = [coder decodeObjectForKey:@"third_open_pay"];
         self.rechargePay = [coder decodeObjectForKey:@"recharge_pay"];
         self.webPayBaseUrl = [coder decodeObjectForKey:@"web_pay_base_url"];
+        self.taptap_config =[coder decodeObjectForKey:@"taptap_config"];
+        self.gravityengine_config =[coder decodeObjectForKey:@"gravityengine_config"];
     }
     return self;
 }
@@ -88,6 +92,8 @@
     [coder encodeObject:self.thirdOpenPay forKey:@"third_open_pay"];
     [coder encodeObject:self.rechargePay forKey:@"recharge_pay"];
     [coder encodeObject:self.webPayBaseUrl forKey:@"web_pay_base_url"];
+    [coder encodeObject:self.taptap_config forKey:@"taptap_config"];
+    [coder encodeObject:self.gravityengine_config forKey:@"gravityengine_config"];
     
 }
 
@@ -183,4 +189,12 @@
     NSNumber *res = mqtt[@"mqtt_check"];
     return [res boolValue];
 }
+
++ (NSDictionary *)getGravityEngineFromConfig{
+    LKSDKConfig *config = [LKSDKConfig getSDKConfig];
+    NSDictionary *gravityengine_config =  config.gravityengine_config;
+    return gravityengine_config;
+}
+
+
 @end

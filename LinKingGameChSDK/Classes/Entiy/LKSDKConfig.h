@@ -31,12 +31,21 @@ NS_ASSUME_NONNULL_BEGIN
 /// web 支付Url
 @property (nonatomic, strong) NSString *webPayBaseUrl;
 
+/// taptap 配置
+@property (nonatomic, strong) NSDictionary *taptap_config;
+/// 引力引擎 配置
+@property (nonatomic, strong) NSDictionary *gravityengine_config;
+
+
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 + (LKSDKConfig *)getSDKConfig;
 + (void)setSDKConfig:(LKSDKConfig *)config;
 + (void)removeSDKConfig;
 /// 获取MQTT参数
 + (NSDictionary *)getMQttSettingFromConfig;
+/// 获取引力引擎配置
++ (NSDictionary *)getGravityEngineFromConfig;
 /// 是否使用MQTT机制
 + (BOOL)isMqttCheck;
 @end

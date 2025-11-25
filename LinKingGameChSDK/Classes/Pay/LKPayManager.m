@@ -15,6 +15,9 @@
 #import "LKConcreteRealNameVerify.h"
 #import "LKWebPayViewController.h"
 #import "LKLog.h"
+#import "LKSDKManager.h"
+#import "LKTaptapUpload.h"
+
 @interface LKPayManager ()
 @property (nonatomic, strong) NSDictionary *parameters;
 @property (nonatomic, strong) UIViewController *viewController;
@@ -318,6 +321,22 @@ static LKPayManager *_instance = nil;
 - (void)startSystemPurchWithID:(NSString *)purchID parames:(NSDictionary *)parames completeHandle:(INAPPPurchCompletionHandle)handle {
     [[LKApplePayManager shared] statrtProductWithId:purchID parames:parames completeHandle:^(PurchType type, NSError * _Nullable error) {
         if (handle) {
+            NSLog(@"支付回调开始...");
+            NSString *amount = parames[@"amount"];
+            NSString *orderId = parames[@"cp_order_no"];
+            NSString *payReason = parames[@"product_id"];
+            NSString *payType = @"CNY";
+            NSString *payMethod = @"苹果内购";
+            int amountNum =(int) round([amount floatValue] * 100);
+            LKLogInfo(@"amount = %@, orderId=%@", amount, orderId);
+            // INAPPPurchCancle取消 INAPPPurchSuccess成功
+            if (type == INAPPPurchSuccess) { // 购买成功
+                NSLog(@"支付成功开始引力引擎上报...");
+                [[LKSDKManager instance] geTrackPayEventWithAmount:amountNum withPayType:payType withOrderId:orderId withPayReason:payReason withPayMethod:payMethod
+                ];
+                NSLog(@"支付成功开始上报php接口...");
+                [LKTaptapUpload uploadTaptapType:@"3" withAmount:amount withPayType:payMethod complete:nil];
+            }
             handle((int)type,error);
         }
     }];

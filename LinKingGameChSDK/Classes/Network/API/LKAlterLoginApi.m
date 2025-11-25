@@ -5,6 +5,7 @@
 #import "LKUser.h"
 #import "LKUserEntity.h"
 #import "LKLog.h"
+#import "LKTaptapUpload.h"
 #import "NSObject+LKUserDefined.h"
 @implementation LKAlterLoginApi
 
@@ -119,6 +120,7 @@
                     }
                     [[NSUserDefaults standardUserDefaults] setObject:iphone forKey:@"USERPHONE"];
                     [LKUser setUser:user];
+                    [LKTaptapUpload uploadLoginTaptapType:@"" complete:nil];
                 }
 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -158,6 +160,7 @@
                 if (user != nil) {
                     // 将用户信息存储到本地
                     [LKUser setUser:user];
+                    [LKTaptapUpload uploadLoginTaptapType:@"" complete:nil];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (complete) {
@@ -210,6 +213,7 @@
                 if (user != nil) {
                     // 将用户信息存储到本地
                     [LKUser setUser:user];
+                    [LKTaptapUpload uploadLoginTaptapType:@"" complete:nil];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (complete) {
@@ -251,6 +255,7 @@
                   [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"USERPASSWORD"];
                   [[NSUserDefaults standardUserDefaults] setObject:iphone forKey:@"USERPHONE"];
                   [LKUser setUser:user];
+                  [LKTaptapUpload uploadLoginTaptapType:@"" complete:nil];
               }
               dispatch_async(dispatch_get_main_queue(), ^{
                   if (complete) {
@@ -288,6 +293,7 @@
                  if (user != nil) {
                      // 将用户信息存储到本地
                      [LKUser setUser:user];
+                     [LKTaptapUpload uploadLoginTaptapType:@"" complete:nil];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
                      if (complete) {
@@ -324,6 +330,7 @@
                      if (user != nil) {
                          // 将用户信息存储到本地
                          [LKUser setUser:user];
+                         [LKTaptapUpload uploadLoginTaptapType:@"" complete:nil];
                      }
                      dispatch_async(dispatch_get_main_queue(), ^{
                          if (complete) {
@@ -456,7 +463,6 @@
     
 }
 
-
 + (void)closeUserInfoWithId:(NSString *)userid complete:(void(^)(NSDictionary *result,NSError *error))complete{
     LKUser *user = [LKUser getUser];
     if (user != nil) {
@@ -493,8 +499,6 @@
         LKLogInfo(@"用户信息不存在,无法注销");
     }
 }
-
-
 
 
 
