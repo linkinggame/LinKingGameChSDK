@@ -9,6 +9,7 @@
 #import "LEAppDelegate.h"
 #import <LinKingGameChSDK/LinKingGameChSDK.h>
 #import <AdSupport/AdSupport.h>
+#import <AFNetworking/AFNetworking.h>
 
 @interface LEAppDelegate ()
 @property (nonatomic, strong) LKSDKManager *manager;
@@ -39,12 +40,51 @@
             NSLog(@"初始化失败：%@",error);
         }
    }];*/
-    [[LKSDKManager instance] registLinKingSDKAppID:@"cmzqappcn_ios" withSecretkey:@"637c031722" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
+//    [[LKSDKManager instance] registLinKingSDKAppID:@"cmzqappcn_ios" withSecretkey:@"637c031722" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
+//
+//        if (error != nil) {
+//            NSLog(@"初始化失败：%@",error);
+//        }
+//   }];
+    
+    // 解决首次弹窗的bug问题
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *const kIsInitializedKey = @"isInitializFirstControled";
+    if (![defaults boolForKey:kIsInitializedKey]) {
+        // 执行初始化操作
+        NSLog(@"首次初始化操作......");
+        // 标记为已初始化
+        [defaults setBool:YES forKey:kIsInitializedKey];
+        [defaults synchronize];
+        AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+        [manager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+            switch (status) {
+                case AFNetworkReachabilityStatusReachableViaWWAN:
+                case AFNetworkReachabilityStatusReachableViaWiFi:
+                    // 网络权限已授予，重新请求数据
+                    /// 注册SDK
+                    [[LKSDKManager instance] registLinKingSDKAppID:@"cmzqappcn_ios" withSecretkey:@"637c031722" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
 
-        if (error != nil) {
-            NSLog(@"初始化失败：%@",error);
-        }
-   }];
+                        if (error != nil) {
+                            NSLog(@"初始化失败：%@",error);
+                        }
+                   }];
+                    break;
+                default:
+                    break;
+            }
+        }];
+        [manager startMonitoring];
+    } else {
+        NSLog(@"已初始化过，跳过......");
+        [[LKSDKManager instance] registLinKingSDKAppID:@"cmzqappcn_ios" withSecretkey:@"637c031722" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
+
+            if (error != nil) {
+                NSLog(@"初始化失败：%@",error);
+            }
+       }];
+    }
+    
     
 
 //    [[LKSDKManager instance] application:application didFinishLaunchingWithOptions:launchOptions];

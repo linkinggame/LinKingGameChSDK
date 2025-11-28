@@ -34,9 +34,7 @@ LinKingGameChSDK is available under the MIT license. See the LICENSE file for mo
 
 2025-11-25 tag = 0.1.6提交
 
-
-
-
+2025-11-28 tag = 0.1.7提交
 
 
 

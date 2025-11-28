@@ -261,11 +261,11 @@ static LKPayManager *_instance = nil;
     LKLogInfo(@">>>>rechargePay:%@",config.rechargePay);
     LKLogInfo(@">>>>payAmount:%@",user.payAmount);
   
-    config.thirdOpenPay = [NSNumber numberWithBool:YES];
+    //config.thirdOpenPay = [NSNumber numberWithBool:YES];
     
     
     if ([config.thirdOpenPay boolValue]) { // 开启web 支付
-        
+        LKLogInfo(@">>>>支付进入=============webview");
         if (user.payAmount.exceptNull == nil || config.rechargePay.exceptNull == nil) {
 //            [self startSystemPurchWithID:purchID parames:parames completeHandle:handle];
             [self startWebPurchWithID:purchID parames:parames completeHandle:handle];
@@ -286,6 +286,7 @@ static LKPayManager *_instance = nil;
         }
        
     } else {  // 未开启web支付
+        LKLogInfo(@">>>>支付进入=============内购");
         [self startSystemPurchWithID:purchID parames:parames completeHandle:handle];
     }
     
