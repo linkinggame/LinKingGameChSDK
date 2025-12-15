@@ -463,7 +463,7 @@
     
 }
 
-+ (void)closeUserInfoWithId:(NSString *)userid complete:(void(^)(NSDictionary *result,NSError *error))complete{
++ (void)closeUserInfoWithId:(NSString *)userid withCloseType:(NSString *)closetype  complete:(void(^)(NSDictionary *result,NSError *error))complete{
     LKUser *user = [LKUser getUser];
     if (user != nil) {
         NSString *url =[NSString stringWithFormat:@"%@%@",[self baseCheckTokenURL],@"user/close"];
@@ -471,6 +471,7 @@
         NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:[self defaultParamesSimple]];
         
         [parameters setObject:user.userId forKey:@"user_id"];
+        [parameters setObject:closetype forKey:@"close_type"];
         
         NSMutableDictionary *headers = [NSMutableDictionary dictionary];
         

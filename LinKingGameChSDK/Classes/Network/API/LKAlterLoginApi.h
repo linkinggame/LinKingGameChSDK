@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)accountLoginWithIphone:(NSString *)iphone withPassword:(NSString *)password Complete:(void(^_Nullable)(NSError *error))complete;
 + (void)autoLoginComplete:(void(^_Nullable)(NSError *error))complete;
 + (void)checkUserInfoWithTime:(int)second complete:(void(^_Nullable)(NSDictionary *result,NSError *error))complete;
-+ (void)closeUserInfoWithId:(NSString *)userid complete:(void(^_Nullable)(NSDictionary *result,NSError *error))complete;
++ (void)closeUserInfoWithId:(NSString *)userid withCloseType:(NSString *)closetype complete:(void(^_Nullable)(NSDictionary *result,NSError *error))complete;
 
 @end
 
