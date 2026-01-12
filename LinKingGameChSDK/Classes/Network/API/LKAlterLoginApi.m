@@ -313,6 +313,43 @@
          }];
 }
 
+/// 抖音登录
++ (void)douyinLoginWithCode:(NSString *)code Complete:(void(^)(NSError *error))complete{
+    NSString *url = [NSString stringWithFormat:@"%@%@",[self baseURL],@"login/douyin_login"];
+          NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:[self defaultParames]];
+       
+         [parameters setObject:code forKey:@"code"];
+         NSMutableDictionary *headers = [NSMutableDictionary dictionary];
+         [LKNetWork postWithURLString:url parameters:parameters HTTPHeaderField:headers success:^(id  _Nonnull responseObject) {
+             NSNumber *success = responseObject[@"success"];
+             NSString *desc = responseObject[@"desc"];
+             NSString *code = responseObject[@"code"];
+             NSDictionary *data = responseObject[@"data"];
+             if ([success boolValue] == YES) {
+                 LKUser *user = [[LKUser alloc] initWithDictionary:data[@"user"]];
+                 if (user != nil) {
+                     // 将用户信息存储到本地
+                     [LKUser setUser:user];
+                     [LKTaptapUpload uploadLoginTaptapType:@"" complete:nil];
+                 }
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     if (complete) {
+                         complete(nil);
+                     }
+                 });
+
+             }else{
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     complete([self responserErrorMsg:desc code:[code intValue]]);
+                 });
+             }
+         } failure:^(NSError * _Nonnull error) {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 complete(error);
+             });
+         }];
+}
+
 + (void)autoLoginComplete:(void(^)(NSError *error))complete{
     LKUser *userTmp = [LKUser getUser];
     if (userTmp != nil && userTmp.token != nil && userTmp.token.length >0) {

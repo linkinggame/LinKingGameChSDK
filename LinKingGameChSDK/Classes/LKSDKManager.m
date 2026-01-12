@@ -29,6 +29,7 @@
 #import "LKLog.h"
 #import "LKAdFace.h"
 #import <GravityEngineSDK/GravityEngineSDK.h>
+#import <DouyinOpenSDK/DouyinOpenSDKApplicationDelegate.h>
 
 @interface LKSDKManager ()<UIApplicationDelegate>
 /// 授权管理类
@@ -204,8 +205,21 @@ static GravityEngineSDK *gravityEngine = nil;
     self.pointManager = [LKPointManager shared];
     [LKPointApi pointEventName:@"Activation" withTp:@"Activation" withValues:nil complete:^(NSError * _Nonnull error) {
     }];
-    
+    // 引力引擎
     [self initGravityEngineAndTap];
+    
+    // 抖音登录初始化
+    LKSDKConfig *config =  [LKSDKConfig getSDKConfig];
+    if (config.douyin_config != nil) {
+        NSString *client_key = config.douyin_config[@"client_key"];
+        NSString *btn_login_visible = config.douyin_config[@"btn_login_visible"];
+        if (client_key!=nil && [@"1" isEqualToString:btn_login_visible] ) {
+//            NSString *clientKey = @"awp7vsk6aly1jpqw";//com.linking.wzsyr
+            [[DouyinOpenSDKApplicationDelegate sharedInstance] registerAppId:client_key];
+            LKLogInfo(@"douyin_config info client_key=%@,btn_login_visible=%@", client_key, btn_login_visible);
+        }
+    }
+    
     // 军娜taptap的php服务端上报
     [LKTaptapUpload uploadTaptapType:@"1" withAmount:@"0" withPayType:@"" complete:nil];
 }
@@ -275,7 +289,10 @@ static GravityEngineSDK *gravityEngine = nil;
 
      [[AppsFlyerLib shared] handleOpenUrl:url options:options];
     
-
+    if ([[DouyinOpenSDKApplicationDelegate sharedInstance] application: app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]]
+        ) {
+        return YES;
+    }
      return YES;
     
 }
@@ -283,6 +300,9 @@ static GravityEngineSDK *gravityEngine = nil;
     
      [[AppsFlyerLib shared] handleOpenURL:url sourceApplication:sourceApplication withAnnotation:annotation];
     
+    if ([[DouyinOpenSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation]) {
+        return YES;
+    }
 
     return YES;
     

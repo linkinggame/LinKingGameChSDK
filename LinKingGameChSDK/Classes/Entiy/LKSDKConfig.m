@@ -37,6 +37,7 @@
         self.webPayBaseUrl = dictionary[@"web_pay_base_url"];
         self.taptap_config = dictionary[@"taptap_config"];
         self.gravityengine_config = dictionary[@"gravityengine_config"];
+        self.douyin_config = dictionary[@"douyin_config"];
     }
     return self;
 }
@@ -66,6 +67,7 @@
         self.webPayBaseUrl = [coder decodeObjectForKey:@"web_pay_base_url"];
         self.taptap_config =[coder decodeObjectForKey:@"taptap_config"];
         self.gravityengine_config =[coder decodeObjectForKey:@"gravityengine_config"];
+        self.douyin_config =[coder decodeObjectForKey:@"douyin_config"];
     }
     return self;
 }
@@ -94,7 +96,7 @@
     [coder encodeObject:self.webPayBaseUrl forKey:@"web_pay_base_url"];
     [coder encodeObject:self.taptap_config forKey:@"taptap_config"];
     [coder encodeObject:self.gravityengine_config forKey:@"gravityengine_config"];
-    
+    [coder encodeObject:self.douyin_config forKey:@"douyin_config"];
 }
 
 + (LKSDKConfig *)getSDKConfig{
@@ -194,6 +196,12 @@
     LKSDKConfig *config = [LKSDKConfig getSDKConfig];
     NSDictionary *gravityengine_config =  config.gravityengine_config;
     return gravityengine_config;
+}
+
++ (NSDictionary *)getDouyinFromConfig{
+    LKSDKConfig *config = [LKSDKConfig getSDKConfig];
+    NSDictionary *douyin_config =  config.douyin_config;
+    return douyin_config;
 }
 
 

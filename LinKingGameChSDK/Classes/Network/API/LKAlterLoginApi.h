@@ -9,6 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)loginWithIphone:(NSString *)iphone checkCode:(NSString *)code password:(NSString *)password complete:(void(^_Nullable)(NSError *error))complete;
 + (void)quickLoginComplete:(void(^_Nullable)(NSError *error))complete;
 + (void)appleLoginWithToken:(NSString *)token Complete:(void(^_Nullable)(NSError *error))complete;
++ (void)douyinLoginWithCode:(NSString *)code Complete:(void(^_Nullable)(NSError *error))complete;
 + (void)accountLoginWithIphone:(NSString *)iphone withPassword:(NSString *)password Complete:(void(^_Nullable)(NSError *error))complete;
 + (void)autoLoginComplete:(void(^_Nullable)(NSError *error))complete;
 + (void)checkUserInfoWithTime:(int)second complete:(void(^_Nullable)(NSDictionary *result,NSError *error))complete;

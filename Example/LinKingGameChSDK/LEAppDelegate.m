@@ -63,7 +63,7 @@
                 case AFNetworkReachabilityStatusReachableViaWiFi:
                     // 网络权限已授予，重新请求数据
                     /// 注册SDK
-                    [[LKSDKManager instance] registLinKingSDKAppID:@"cmzqappcn_ios" withSecretkey:@"637c031722" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
+                    [[LKSDKManager instance] registLinKingSDKAppID:@"wzsyrapp_ios" withSecretkey:@"65a27d5dcf" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
 
                         if (error != nil) {
                             NSLog(@"初始化失败：%@",error);
@@ -77,7 +77,7 @@
         [manager startMonitoring];
     } else {
         NSLog(@"已初始化过，跳过......");
-        [[LKSDKManager instance] registLinKingSDKAppID:@"cmzqappcn_ios" withSecretkey:@"637c031722" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
+        [[LKSDKManager instance] registLinKingSDKAppID:@"wzsyrapp_ios" withSecretkey:@"65a27d5dcf" cmoplete:^(LKSDKManager * _Nonnull manager, NSError * _Nonnull error) {
 
             if (error != nil) {
                 NSLog(@"初始化失败：%@",error);

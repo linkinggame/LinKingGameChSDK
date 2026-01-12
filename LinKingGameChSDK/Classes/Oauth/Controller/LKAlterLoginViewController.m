@@ -20,6 +20,11 @@
 #import <TZImagePickerController/TZImagePickerController.h>
 #import "LKRealNameVerifyFactory.h"
 #import "LKControlUtil.h"
+#import "LKLog.h"
+#import <DouyinOpenSDK/DouyinOpenSDKApplicationDelegate.h>
+#import <DouyinOpenSDK/DouyinOpenSDKAuth.h>
+#import <DouyinOpenSDK/DouyinOpenSDKShare.h>
+
 //#import "MMMaterialDesignSpinner.h"
 @interface LKAlterLoginViewController ()
 @property (nonatomic, strong)  LKOauthView * oauthView;
@@ -314,11 +319,14 @@
             weakSelf.thirdLoginAction(sender);
         }
         if (sender.tag == 10) {
+            LKLogInfo(@"quickLogin===============");
             [weakSelf quickLogin];
         }else if (sender.tag == 20){
+            LKLogInfo(@"appleLogin===============");
             [weakSelf appleLogin];
         }else if (sender.tag == 30){
-           // TODO:DELETE
+            LKLogInfo(@"douyinLogin 1===============");
+            [weakSelf douyinLogin];
         }else if (sender.tag == 40){
             // TODO:DELETE
         }
@@ -521,6 +529,114 @@
     }];
 }
 
+#pragma mark -- 抖音登录
+- (void)douyinLogin{
+    DouyinOpenSDKAuthRequest *request = [[DouyinOpenSDKAuthRequest alloc] init];
+    bool needWhiteList=YES;
+    LKSDKConfig *config =  [LKSDKConfig getSDKConfig];
+    if (config.douyin_config.exceptNull != nil) {
+        NSString *scope = config.douyin_config[@"scope"];
+        if (scope!=nil && [scope rangeOfString: @"trial.whitelist"].location != NSNotFound) {
+            needWhiteList = YES;
+        }else{
+            needWhiteList = NO;
+        }
+    }
+    if (needWhiteList) {
+        request.permissions = [NSOrderedSet orderedSetWithArray:@[@"user_info", @"trial.whitelist"]];
+    }else{
+        request.permissions = [NSOrderedSet orderedSetWithObject:@"user_info"];
+    }
+    
+    LKLogInfo(@"douyinLogin 2 ===============");
+    [request sendAuthRequestViewController: self completeBlock:^(DouyinOpenSDKAuthResponse * _Nonnull resp) {
+        NSString *alertString = nil;
+        if (resp.errCode == 0) {
+            // 宿主需自行实现此接口
+            alertString = [NSString stringWithFormat:@"douyin ======== Auth success code: %@, permission: %@", resp.code, resp.grantedPermissions];
+            LKLogInfo(@"douyinLogin=======success code = %@", resp.code);
+            //开始走抖音登录
+            // 发起请求
+            [LKAlterLoginApi douyinLoginWithCode: resp.code Complete:^(NSError * _Nonnull error) {
+                [self basePoint];
+                LKUser * user =[LKUser getUser];
+                if (error ==nil) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginSuccess" object:user];
+                    UIViewController *vc = self.presentingViewController != nil?self.presentingViewController : self;
+                    [vc dismissViewControllerAnimated:NO completion:^{
+                        if (user != nil ) {
+                            if ([[LKRealNameVerifyFactory createRealNameVerify] isRealName] == NO) {
+                                if ([LKControlUtil isOpenStopAddiction] == YES){ // 防沉迷状态开启
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"RealNameAuthenticationCanClose" object:nil];
+                                }else{
+                                    if (self.loginCompleteCallBack) {
+                                        self.loginCompleteCallBack(user, error);
+                                    }
+                                }
+                            }else{
+                                if (self.loginCompleteCallBack) {
+                                    self.loginCompleteCallBack(user, error);
+                                }
+                            }
+                        }else{
+                           CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+                           style.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.9];
+                           [self.view makeToast:error.localizedDescription duration:2 position:CSToastPositionCenter style:style];
+                           if (self.loginCompleteCallBack) {
+                                self.loginCompleteCallBack(user, error);
+                           }
+                        }
+                    }];
+                }else{
+                    
+                    if (error.code == 2234) {
+                        UIViewController *vc = self.presentingViewController != nil?self.presentingViewController : self;
+                         [vc dismissViewControllerAnimated:NO completion:^{
+                             [[NSNotificationCenter defaultCenter] postNotificationName:@"RealNameAuthentication" object:error];
+                         }];
+                         
+                    }else if (error.code == 2235){ // 未成年人固定时间段不可玩
+                         UIViewController *vc = self.presentingViewController != nil?self.presentingViewController : self;
+                         [vc dismissViewControllerAnimated:NO completion:^{
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NONAGEFORBIDPLAYGAME" object:error];
+                        }];
+                    }else if (error.code == 2236){ // 未成年人累计时间超出不可玩
+                         UIViewController *vc = self.presentingViewController != nil?self.presentingViewController : self;
+                         [vc dismissViewControllerAnimated:NO completion:^{
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NONAGEPLAYTIMEEXPIRE" object:error];
+                        }];
+                    }else{
+                        NSError *errorRes = [self responserErrorMsg:error.localizedDescription code:1004];
+                        if (self.appleLoginCallBack) {
+                            self.appleLoginCallBack(errorRes);
+                        }
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginFail" object:errorRes];
+                        if (self.loginCompleteCallBack) {
+                            self.loginCompleteCallBack(nil, errorRes);
+                        }
+                    }
+                    CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+                    style.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.9];
+                    [self.view makeToast:error.localizedDescription duration:2 position:CSToastPositionCenter style:style];
+                    
+
+                }
+                
+               
+                
+            }];
+        
+            
+        }
+        else {
+            alertString = [NSString stringWithFormat:@"douyin ======== Auth failed code: %@, msg: %@", @(resp.errCode), resp.errString];
+        }
+        LKLogInfo(@"douyinLogin===============%@", alertString);
+        
+    }];
+  
+
+}
 
 
 #pragma mark -- 忘记密码

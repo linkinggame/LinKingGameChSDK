@@ -27,7 +27,7 @@
     
     LKOauthView *view = [[bundle loadNibNamed:@"LKOauthView" owner:nil options:nil] firstObject];
     
-
+    
     view.textfield_pwd.clearButtonMode = UITextFieldViewModeAlways;
     view.textfield_iphone.clearButtonMode = UITextFieldViewModeAlways;
     view.textfield_code.clearButtonMode = UITextFieldViewModeAlways;
@@ -61,11 +61,11 @@
     view.button_quick.layer.borderColor = [UIColor colorWithRed:219/255.0 green:78/255.0 blue:78/255.0 alpha:1].CGColor;
     view.button_quick.layer.borderWidth = 1;
     
-
+    
     
     view.layer.cornerRadius = 15;
     view.clipsToBounds = YES;
-   
+    
     [view hiddenViewPasswordIsInitState:YES];
     [view hiddenViewChechView];
     [view hiddenButtonLogin];
@@ -74,7 +74,7 @@
     CGFloat phoneViewHeight = 0;
     // 防沉迷控制
     LKSDKConfig *config = [LKSDKConfig getSDKConfig];
-     NSNumber *phoneShow = config.auth_config[@"phone_show"];
+    NSNumber *phoneShow = config.auth_config[@"phone_show"];
     if (phoneShow != nil) {
         if ([phoneShow boolValue] == YES) {
             [view showViewIphone];
@@ -82,14 +82,14 @@
             [view hiddenViewIphone];
             phoneViewHeight = 40;
         }
-
+        
     }else{
         [view hiddenViewIphone];
         phoneViewHeight = 40;
     }
     view.deductionHeight = 5 + 40 + 5 + 40 + 20 + 40 + phoneViewHeight;
-   
-
+    
+    
     
     view.textfield_pwd.secureTextEntry = YES;
     view.switchIndex = 20;
@@ -102,23 +102,70 @@
     
     if (@available(iOS 13.0, *)) {
         
-        ASAuthorizationAppleIDButton *button = [ASAuthorizationAppleIDButton buttonWithType:ASAuthorizationAppleIDButtonTypeSignIn style:ASAuthorizationAppleIDButtonStyleBlack];
-        [button addTarget:view action:@selector(appleLoginAction) forControlEvents:UIControlEventTouchUpInside];
-        button.layer.cornerRadius = 19;
-        button.clipsToBounds = YES;
-        [view.view_apple addSubview:button];
+        /*ASAuthorizationAppleIDButton *button = [ASAuthorizationAppleIDButton buttonWithType:ASAuthorizationAppleIDButtonTypeSignIn style:ASAuthorizationAppleIDButtonStyleBlack];
+         [button addTarget:view action:@selector(appleLoginAction) forControlEvents:UIControlEventTouchUpInside];
+         button.layer.cornerRadius = 19;
+         button.clipsToBounds = YES;
+         [view.view_apple addSubview:button];
+         
+         button.translatesAutoresizingMaskIntoConstraints = NO;
+         NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
+         
+         NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
+         
+         NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
+         
+         NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
+         
+         [view.view_apple addConstraints:@[left,right,top,bottom]];
+         */
 
-        button.translatesAutoresizingMaskIntoConstraints = NO;
-        NSLayoutConstraint *left = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0];
-
-        NSLayoutConstraint *right = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeRight multiplier:1.0 constant:0];
-
-        NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeTop multiplier:1.0 constant:0];
-
-        NSLayoutConstraint *bottom = [NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view.view_apple attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-
-        [view.view_apple addConstraints:@[left,right,top,bottom]];
-
+        // 创建并配置左边按钮
+        ASAuthorizationAppleIDButton *leftButton = [ASAuthorizationAppleIDButton buttonWithType:ASAuthorizationAppleIDButtonTypeSignIn style:ASAuthorizationAppleIDButtonStyleBlack];
+        leftButton.layer.cornerRadius = 19;//对苹果内置按钮无效
+        leftButton.clipsToBounds = YES;
+        leftButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [leftButton addTarget:view
+                       action:@selector(apple2LoginAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+        [view.view_apple addSubview:leftButton];
+        
+        // 创建并配置右边按钮
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [rightButton setTitle:@"抖音登录" forState:UIControlStateNormal];
+        [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        rightButton.backgroundColor = [UIColor systemRedColor];
+        rightButton.layer.cornerRadius = 19;
+        rightButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [rightButton addTarget:view
+                        action:@selector(douyinLoginAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [view.view_apple addSubview:rightButton];
+        
+        
+        [NSLayoutConstraint activateConstraints:@[
+            // 水平居中偏移
+            [leftButton.centerXAnchor constraintEqualToAnchor: view.view_apple.centerXAnchor constant:-80],
+            // 垂直居中
+            [leftButton.centerYAnchor constraintEqualToAnchor: view.view_apple.centerYAnchor],
+            // 宽度
+            [leftButton.widthAnchor constraintEqualToConstant:120],
+            // 高度
+            [leftButton.heightAnchor constraintEqualToConstant:40]
+        ]];
+        
+        // 右边按钮约束
+        [NSLayoutConstraint activateConstraints:@[
+            // 水平居中偏移
+            [rightButton.centerXAnchor constraintEqualToAnchor:view.view_apple.centerXAnchor constant:80],
+            // 与左边按钮垂直对齐
+            [rightButton.centerYAnchor constraintEqualToAnchor: leftButton.centerYAnchor],
+            // 宽度与左边按钮相同
+            [rightButton.widthAnchor constraintEqualToAnchor: leftButton.widthAnchor],
+            // 高度与左边按钮相同
+            [rightButton.heightAnchor constraintEqualToAnchor: leftButton.heightAnchor]
+        ]];
+        
     }else{
         [view hiddenAppleView];
         view.deductionHeight =  view.deductionHeight + 64;
@@ -130,7 +177,8 @@
     view.totalHeight = deductionImageHeight + 40 + 5 + 40 + 5 + 40 + 20 + 40 + 20 + 40  +  64 + 40;
     // deductionImageHeight + 40 + 5 + 40 + 5 + 40 + 20 + 40 + 20 + 40 + 72 + 40;
     
-    [view controllerAuthShow];
+    //[view controllerAuthShow];//隐藏apple登录按钮
+    [view controllerAuth2Show];//隐藏apple登录按钮
     
     view.startRealHeight = view.totalHeight - view.deductionHeight;
     
@@ -143,11 +191,34 @@
         self.textFieldBenginEditCallBack(self.startRealHeight);
     }
 }
+- (void)controllerAuth2Show{
+    LKSDKConfig *config =  [LKSDKConfig getSDKConfig];
+    if (config.auth_config.exceptNull != nil){
+        NSString *auth_type = config.auth_config[@"auth_type"];
+        if (auth_type!=nil  ){
+            bool needDouyin=NO;
+            if (config.douyin_config.exceptNull != nil) {
+                NSString *btn_login_visible = config.douyin_config[@"btn_login_visible"];
+                if ([@"1" isEqualToString: btn_login_visible]) {
+                    needDouyin = YES;
+                }else{
+                    needDouyin = NO;
+                }
+            }
+            if ([@"guest" isEqualToString: auth_type] && needDouyin==NO ){
+                [self hiddenAppleView];
+                NSLog(@"================self hiddenAppleView ");
+                self.deductionHeight =  self.deductionHeight + 64;
 
+             }
+        }
+    }
+    
+}
 - (void)controllerAuthShow{
     LKSDKConfig *config =  [LKSDKConfig getSDKConfig];
      
-     if (config.auth_config.exceptNull != nil) {
+    if (config.auth_config.exceptNull != nil) {
          NSString *auth_type = config.auth_config[@"auth_type"];
          if ([auth_type rangeOfString:@","].location != NSNotFound) {
              
@@ -183,6 +254,38 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.tag = 20;
      self.signInStyle = SignInStyle_Apple;
+
+    if(self.thirdLoginAction){
+        self.thirdLoginAction(button);
+    }
+}
+
+- (IBAction)apple2LoginAction:(UIButton *)sender {
+    if (self.button_check.selected == NO) {
+        CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+        style.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.9];
+        [self.contentView makeToast:@"未勾选协议" duration:2 position:CSToastPositionCenter style:style];
+        return;
+    }
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.tag = 20;
+     self.signInStyle = SignInStyle_Apple;
+
+    if(self.thirdLoginAction){
+        self.thirdLoginAction(button);
+    }
+}
+
+- (IBAction)douyinLoginAction:(UIButton *)sender {
+    if (self.button_check.selected == NO) {
+        CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+        style.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.9];
+        [self.contentView makeToast:@"未勾选协议" duration:2 position:CSToastPositionCenter style:style];
+        return;
+    }
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.tag = 30;
+    self.signInStyle = SignInStyle_Douyin;
 
     if(self.thirdLoginAction){
         self.thirdLoginAction(button);

@@ -5,7 +5,7 @@ typedef NS_ENUM(NSInteger,SignInStyle) {
     SignInStyle_Code = 20,
     SignInStyle_Quick = 30,
     SignInStyle_Apple = 40,
-
+    SignInStyle_Douyin = 50,
 };
 
 NS_ASSUME_NONNULL_BEGIN

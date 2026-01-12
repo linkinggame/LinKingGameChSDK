@@ -38,4 +38,5 @@ LinKingGameChSDK is available under the MIT license. See the LICENSE file for mo
 
 2025-12-15 tag = 0.1.8提交
 
+2026-01-12 tag = 0.1.9提交(新增抖音登录)
 

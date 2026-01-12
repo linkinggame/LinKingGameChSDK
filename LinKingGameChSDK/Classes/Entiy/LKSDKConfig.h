@@ -35,7 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *taptap_config;
 /// 引力引擎 配置
 @property (nonatomic, strong) NSDictionary *gravityengine_config;
-
+/// 抖音配置
+@property (nonatomic, strong) NSDictionary *douyin_config;
 
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
@@ -46,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSDictionary *)getMQttSettingFromConfig;
 /// 获取引力引擎配置
 + (NSDictionary *)getGravityEngineFromConfig;
+/// 获取抖音配置
++ (NSDictionary *)getDouyinFromConfig;
 /// 是否使用MQTT机制
 + (BOOL)isMqttCheck;
 @end
