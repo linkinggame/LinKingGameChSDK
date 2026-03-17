@@ -17,6 +17,9 @@
 #import <TZImagePickerController/TZImagePickerController.h>
 #import "LKLog.h"
 #import "LKUUID.h"
+#import "BDASignalManager.h"
+#import "BDASignalDefinitions.h"
+#import "LKSDKManager.h"
 
 @implementation LKTaptapUpload
 
@@ -30,6 +33,10 @@
         userId=user.userId;
         login_type=user.login_type;
         third_id=user.third_id;
+        // 抖音巨量营销融合归因 上报注册事件
+        [[LKSDKManager instance] bdaSignalRegisterWith3UserId:userId withLoginType:login_type with3ThirdId:third_id];
+        
+        //后台php自定义上报
         LKLogInfo(@"questTaptapType uploadLoginTaptapType =============== userId = %@, loginType=%@, thirdId=%@", userId, login_type, third_id);
         [self uploadTaptapType:@"2" withAmount:@"0" withPayType:@"" complete:complete];
     }
@@ -52,6 +59,10 @@
             userId=user.userId;
             login_type=user.login_type;
             third_id=user.third_id;
+            if (third_id==NULL || third_id==nil||[@"<null>" isEqualToString:third_id]) {
+                third_id=@"";
+            }
+            LKLogInfo(@"questTaptapType info begin third_id= %@", third_id);
         }
         
         NSString * tapad_dot_flag = taptap_config[@"tapad_dot_flag"];

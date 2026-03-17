@@ -56,6 +56,14 @@
 				<string>awp7vsk6aly1jpqw</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.lingyue.cmzqapp</string>
+			</array>
+		</dict>
 	</array>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<false/>

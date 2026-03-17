@@ -329,11 +329,15 @@ static LKPayManager *_instance = nil;
             NSString *payType = @"CNY";
             NSString *payMethod = @"苹果内购";
             int amountNum =(int) round([amount floatValue] * 100);
-            LKLogInfo(@"amount = %@, orderId=%@", amount, orderId);
+            LKLogInfo(@"amount = %@, orderId=%@ , type =%d ", amount, orderId, type);
+            
             // INAPPPurchCancle取消 INAPPPurchSuccess成功
             if (type == INAPPPurchSuccess) { // 购买成功
                 NSLog(@"支付成功开始引力引擎上报...");
                 [[LKSDKManager instance] geTrackPayEventWithAmount:amountNum withPayType:payType withOrderId:orderId withPayReason:payReason withPayMethod:payMethod
+                ];
+                NSLog(@"支付成功开始抖音巨量营销上报...");
+                [[LKSDKManager instance] bdaSignalPayWith3Amount:amountNum with3PayType:payType with3OrderId:orderId with3Method:payMethod
                 ];
                 NSLog(@"支付成功开始上报php接口...");
                 [LKTaptapUpload uploadTaptapType:@"3" withAmount:amount withPayType:payMethod complete:nil];

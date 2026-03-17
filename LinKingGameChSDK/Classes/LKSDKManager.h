@@ -65,6 +65,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)geTrackPayEventWithAmount:(int)payAmount withPayType:(NSString *)payType withOrderId:(NSString *)orderId withPayReason:(NSString *)payReason withPayMethod:(NSString *)payMethod;
 
+- (void)bdaSignalPayWith3Amount:(int)payAmount with3PayType:(NSString *)payType with3OrderId:(NSString *)orderId  with3Method:(NSString *)payMethod;
+
+- (void)bdaSignalRegisterWith3UserId:(NSString *)userId withLoginType:(NSString *)loginType with3ThirdId:(NSString *)thirdId;
+
+- (void)bdaSignalLaunchApp;
+
 
 @end
 

@@ -30,6 +30,8 @@
 #import "LKAdFace.h"
 #import <GravityEngineSDK/GravityEngineSDK.h>
 #import <DouyinOpenSDK/DouyinOpenSDKApplicationDelegate.h>
+#import "BDASignalManager.h"
+#import "BDASignalDefinitions.h"
 
 @interface LKSDKManager ()<UIApplicationDelegate>
 /// 授权管理类
@@ -240,7 +242,7 @@ static GravityEngineSDK *gravityEngine = nil;
             gravityEngine = [GravityEngineSDK sharedInstanceWithAppid:config.appid];
             // 开启自动采集
             [gravityEngine enableAutoTrack:GravityEngineEventTypeAll];
-            [gravityEngine initializeGravityEngineWithAsaEnable:NO withClientId:nil withCaid1:nil withCaid2:nil withSyncAttribution:NO withChannel:@"AppStore" withSuccessCallback:^(NSDictionary * _Nonnull response) {
+            [gravityEngine initializeGravityEngineWithAsaEnable:YES withClientId:@"" withCaid1:@"" withCaid2:@"" withSyncAttribution:NO withChannel:@"AppStore" withSuccessCallback:^(NSDictionary * _Nonnull response) {
                 LKLogInfo(@"gravity engine initialize success, response is %@", response);
                 //注册上报
                 [gravityEngine trackRegisterEvent];
@@ -267,6 +269,17 @@ static GravityEngineSDK *gravityEngine = nil;
     // 开启监听支付
     [[LKApplePayManager shared] startManager];
     
+    // 抖音巨量营销融合归因优化方案
+    // 注册可选参数
+    [BDASignalManager enableIdfa:YES];
+    [BDASignalManager registerWithOptionalData:@{
+        kBDADSignalSDKUserUniqueId : @""  // 业务用户id，非必传
+    }];
+    // 上报冷启动事件
+    [BDASignalManager didFinishLaunchingWithOptions:launchOptions connectOptions:nil];
+//    [BDASignalManager enablePurchaseEvent];
+    [[LKSDKManager instance] bdaSignalLaunchApp ];
+    
     return YES;
 }
 
@@ -287,11 +300,14 @@ static GravityEngineSDK *gravityEngine = nil;
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options{
     
 
-     [[AppsFlyerLib shared] handleOpenUrl:url options:options];
+    [[AppsFlyerLib shared] handleOpenUrl:url options:options];
     
+    // 抖音巨量营销融合归因
+    NSString *openUrl = url.absoluteString;
+    [BDASignalManager anylyseDeeplinkClickidWithOpenUrl:openUrl];
+    // 抖音登录
     if ([[DouyinOpenSDKApplicationDelegate sharedInstance] application: app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]]
         ) {
-        return YES;
     }
      return YES;
     
@@ -340,6 +356,95 @@ static GravityEngineSDK *gravityEngine = nil;
     if (gravityEngine!=nil) {
         [gravityEngine trackPayEventWithAmount:payAmount withPayType:payType withOrderId:orderId withPayReason:payReason withPayMethod:payMethod];
         NSLog(@"gravity TrackPayEventWithAmount=%d,payType=%@,orderId=%@, payReason=%@, payMethod=%@", payAmount, payType, orderId, payReason, payMethod);
+    }
+}
+
+- (void)bdaSignalPayWith3Amount:(int)payAmount with3PayType:(NSString *)payType with3OrderId:(NSString *)orderId  with3Method:(NSString *)payMethod {
+    LKLogInfo(@"bdaSignalPayWith3Amount begin upload =============== payAmount = %d, payType=%@, payMethod=%@", payAmount, payType, payMethod);
+    LKSDKConfig *config = [LKSDKConfig getSDKConfig];
+    if (config!=nil) {
+        NSDictionary *sdk_config =  config.sdk_config;
+        NSString * gameId = @"";
+        if (sdk_config!=nil) {
+            gameId = sdk_config[@"app_id_ios"];
+        }
+        NSString *payAmount3 = @(payAmount).stringValue;
+        NSString *clickId = [BDASignalManager getClickId];
+        if (clickId==nil) {
+            clickId=@"";
+        }
+        
+//        [BDASignalManager trackEssentialEventWithName: @"in_app_pay" params:@{
+//            @"click_id": clickId,
+//            @"game_id": gameId,
+//            @"pay_amount": payAmount3,
+//            @"pay_type": payType,
+//            @"order_id": orderId,
+//            @"pay_method": payMethod
+//        }];
+        [BDASignalManager trackEssentialEventWithName: kBDADSignalSDKEventPurchase params:@{
+            @"click_id": clickId,
+            @"game_id": gameId,
+            @"pay_amount": payAmount3,
+            @"pay_type": payType,
+            @"order_id": orderId,
+            @"pay_method": payMethod
+        }];
+    }
+}
+
+
+- (void)bdaSignalLaunchApp{
+    LKLogInfo(@"bdaSignalLaunchApp begin upload =============== ");
+    LKSDKConfig *config = [LKSDKConfig getSDKConfig];
+    if (config!=nil) {
+        NSDictionary *sdk_config =  config.sdk_config;
+        NSString * gameId = @"";
+        if (sdk_config!=nil) {
+            gameId = sdk_config[@"app_id_ios"];
+        }
+        NSString *clickId = [BDASignalManager getClickId];
+        if (clickId==nil) {
+            clickId=@"";
+        }
+        [BDASignalManager trackEssentialEventWithName: @"supply_active" params:@{
+            @"click_id": clickId,
+            @"game_id": gameId
+        }];
+    }
+}
+
+
+- (void)bdaSignalRegisterWith3UserId:(NSString *)userId withLoginType:(NSString *)loginType with3ThirdId:(NSString *)thirdId {
+    LKLogInfo(@"bdaSignalRegisterWith3UserId begin upload =============== userId = %@, loginType=%@, thirdId=%@", userId, loginType, thirdId);
+    LKSDKConfig *config = [LKSDKConfig getSDKConfig];
+    if (config!=nil) {
+        NSDictionary *sdk_config =  config.sdk_config;
+        NSString * gameId = @"";
+        if (sdk_config!=nil) {
+            gameId = sdk_config[@"app_id_ios"];
+        }
+        NSString *clickId = [BDASignalManager getClickId];
+        LKLogInfo(@"bdaSignalRegisterWith3UserId begin 采集SDK上报结果 upload =============== clickId1=%@", clickId);
+        if (clickId==nil) {
+            clickId=@"";
+        }
+        LKLogInfo(@"bdaSignalRegisterWith3UserId begin 采集SDK上报结果 upload =============== clickId2=%@", clickId);
+        // kBDADSignalSDKEventRegister
+//        [BDASignalManager trackEssentialEventWithName:@"login" params:@{
+//            @"click_id": clickId,
+//            @"user_id": userId,
+//            @"login_type": loginType,
+//            @"third_id": thirdId,
+//            @"game_id": gameId
+//        }];
+        [BDASignalManager trackEssentialEventWithName:kBDADSignalSDKEventRegister params:@{
+            @"click_id": clickId,
+            @"user_id": userId,
+            @"login_type": loginType,
+            @"third_id": thirdId,
+            @"game_id": gameId
+        }];
     }
 }
 

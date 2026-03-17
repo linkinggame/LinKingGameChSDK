@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LinKingGameChSDK'
-  s.version          = '0.1.9'
+  s.version          = '0.1.10'
   s.summary          = 'A short description of LinKingGameChSDK.'
 
 # This description is used to generate tags and improve search results.
@@ -83,6 +83,11 @@ TODO: Add long description of the pod here.
 
     #抖音登录
     s.dependency 'DouyinOpenSDK', '~> 4.2.4'
+
+    # https://bytedance.larkoffice.com/docx/CgYBdVzoBogND2xv7PhcSfFNnyc
+    # s.dependency  'BDASignalSDK', '~> 1.0.5'
+    s.dependency  'BDASignalSDK', '~> 2.0.0'
+    
 
     #  s.dependency 'MintegralAdSDK/RewardVideoAd','7.7.9'
     #  s.dependency 'MintegralAdSDK/BidRewardVideoAd','7.7.9'
