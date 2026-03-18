@@ -277,7 +277,7 @@ static GravityEngineSDK *gravityEngine = nil;
     }];
     // 上报冷启动事件
     [BDASignalManager didFinishLaunchingWithOptions:launchOptions connectOptions:nil];
-//    [BDASignalManager enablePurchaseEvent];
+    [BDASignalManager enablePurchaseEvent];
     [[LKSDKManager instance] bdaSignalLaunchApp ];
     
     return YES;
